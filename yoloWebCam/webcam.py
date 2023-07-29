@@ -4,7 +4,8 @@ import cvzone
 import math
 
 # creating web cam object
-cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0) # for web cam
+cap = cv2.VideoCapture('./Videos/cars.mp4') # for videos
 cap.set(3,1280) # for width
 cap.set(4,720) #for height
 
@@ -46,7 +47,15 @@ while True:
             #classnames
             cls = int(box.cls[0])
             #to display conf and object class on webcam
-            cvzone.putTextRect(img,f'{classNames[cls]} {conf}',(max(0,x1),max(35,y1)))
+            cvzone.putTextRect(img,f'{classNames[cls]} {conf}',(max(0,x1),max(35,y1)),scale=0.7,thickness=1)
             
     cv2.imshow("Image",img)
-    cv2.waitKey(1)
+    # cv2.waitKey(1)
+    # Wait for a key event, but only for a short duration (10 milliseconds)
+    # If the key is Esc (27), then break out of the loop and close the webcam
+    if cv2.waitKey(10) == 27:
+        break
+
+# Release the webcam and close all OpenCV windows
+cap.release()
+cv2.destroyAllWindows()
